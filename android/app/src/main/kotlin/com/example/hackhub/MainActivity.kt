@@ -1,4 +1,4 @@
-package com.example.hackhub
+package com.newset.toolhub
 
 import io.flutter.embedding.android.FlutterActivity
 

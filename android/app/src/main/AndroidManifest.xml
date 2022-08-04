@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hackhub">
+    package="com.newset.toolhub">
    <application
-        android:label="hackhub"
+        android:label="toolhub"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
