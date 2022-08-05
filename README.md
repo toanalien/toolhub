@@ -49,3 +49,10 @@ https://pub.dev/packages/local_auth
 
 地址: https://pub.flutter-io.cn/packages/flutter_inappwebview
 初始化: https://inappwebview.dev/docs/get-started/setup-ios/
+
+
+## 分享
+
+share_plus: ^4.0.10
+
+https://pub.dev/packages/share_plus

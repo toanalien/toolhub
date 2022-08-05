@@ -52,6 +52,33 @@ class _BrowserState extends State<Browser> {
     );
   }
 
+  Widget buildBrowser() {
+    return InAppWebView(
+      key: webViewKey,
+      initialUrlRequest: URLRequest(
+        url: url,
+      ),
+      onWebViewCreated: (controller) {
+        webViewController = controller;
+      },
+      pullToRefreshController: pullToRefreshController,
+      onLoadStop: (controller, url) async {
+        pullToRefreshController.endRefreshing();
+      },
+      onProgressChanged: (controller, progress) {
+        if (progress == 100) {
+          pullToRefreshController.endRefreshing();
+        }
+        setState(() {
+          this.progress = progress / 100;
+        });
+      },
+      onConsoleMessage: (controller, consoleMessage) {
+        print(consoleMessage);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,74 +87,47 @@ class _BrowserState extends State<Browser> {
       backgroundColor: Colors.white,
       body: SafeArea(
         // top: false,
-        child: Container(
-          // padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: InAppWebView(
-                  key: webViewKey,
-                  initialUrlRequest: URLRequest(
-                    url: url,
-                  ),
-                  onWebViewCreated: (controller) {
-                    webViewController = controller;
-                  },
-                  pullToRefreshController: pullToRefreshController,
-                  onLoadStop: (controller, url) async {
-                    pullToRefreshController.endRefreshing();
-                  },
-                  onProgressChanged: (controller, progress) {
-                    if (progress == 100) {
-                      pullToRefreshController.endRefreshing();
-                    }
-                    setState(() {
-                      this.progress = progress / 100;
-                    });
-                  },
-                  onConsoleMessage: (controller, consoleMessage) {
-                    print(consoleMessage);
-                  },
-                ),
+        child: Column(
+          children: [
+            Expanded(
+              child: buildBrowser(),
+            ),
+            progress < 1.0
+                ? LinearProgressIndicator(
+                    value: progress,
+                    color: Colors.teal,
+                    backgroundColor: Colors.teal.shade100,
+                  )
+                : Container(),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 12.0,
+                right: 12.0,
+                top: 8.0,
+                bottom: 8.0,
               ),
-              progress < 1.0
-                  ? LinearProgressIndicator(
-                      value: progress,
-                      color: Colors.teal,
-                      backgroundColor: Colors.teal.shade100,
-                    )
-                  : Container(),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 12.0,
-                  right: 12.0,
-                  top: 8.0,
-                  bottom: 8.0,
-                ),
-                child: TextField(
-                  decoration: MTheme.input.copyWith(
-                    hintText: '请输入地址',
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        webViewController?.reload();
-                      },
-                      icon: const Icon(
-                        Icons.refresh,
-                      ),
+              child: TextField(
+                decoration: MTheme.input.copyWith(
+                  hintText: '请输入地址',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      webViewController?.reload();
+                    },
+                    icon: const Icon(
+                      Icons.refresh,
                     ),
                   ),
-                  keyboardType: TextInputType.url,
-                  onSubmitted: (value) {
-                    setState(() {
-                      url = Uri.parse(value);
-                    });
-                    webViewController?.loadUrl(
-                        urlRequest: URLRequest(url: url));
-                  },
                 ),
+                keyboardType: TextInputType.url,
+                onSubmitted: (value) {
+                  setState(() {
+                    url = Uri.parse(value);
+                  });
+                  webViewController?.loadUrl(urlRequest: URLRequest(url: url));
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
