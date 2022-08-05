@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
+import 'package:toolhub/routes/browser.dart';
+import 'package:toolhub/routes/home.dart';
+import 'package:toolhub/routes/message.dart';
+import 'package:toolhub/routes/settings.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -21,12 +23,32 @@ class _BottomBarState extends State<BottomBar> {
   ];
 
   var _bottomNavIndex = 0;
+  PageController ctr = PageController(initialPage: 0);
+
+  static final pages = [
+    const HomePage(),
+    const Browser(),
+    const Message(),
+    const SettingPage(),
+  ];
+
+  Widget buildBody() {
+    return PageView.builder(
+      controller: ctr,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 4,
+      itemBuilder: (context, index) {
+        return pages[index];
+      },
+    );
+  }
 
   AnimatedBottomNavigationBar buildBar() {
     return AnimatedBottomNavigationBar.builder(
       itemCount: iconList.length,
       tabBuilder: (int index, bool isActive) {
-        final color = isActive ? Colors.blueAccent : Colors.grey;
+        Color color =
+            _bottomNavIndex == index ? Colors.teal.shade500 : Colors.grey;
         return Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,25 +63,25 @@ class _BottomBarState extends State<BottomBar> {
       },
       backgroundColor: Colors.white,
       activeIndex: _bottomNavIndex,
-      splashColor: Colors.blueAccent,
+      splashColor: Colors.teal,
       splashSpeedInMilliseconds: 300,
       notchSmoothness: NotchSmoothness.defaultEdge,
       gapWidth: 0,
       leftCornerRadius: 0,
       rightCornerRadius: 0,
-      onTap: (index) => setState(() => _bottomNavIndex = index),
+      onTap: (index) {
+        setState(() {
+          _bottomNavIndex = index;
+        });
+        ctr.jumpToPage(index);
+      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Toolhub', style: Theme.of(context).textTheme.headline6),
-        elevation: 0,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-      ),
-      body: Text('$_bottomNavIndex'),
+      body: buildBody(),
       bottomNavigationBar: buildBar(),
     );
   }

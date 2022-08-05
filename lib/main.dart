@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
         Locale('zh', 'CN'), // 中文简体
         //其它Locales
       ],
-      darkTheme: Config.darkTheme,
-      theme: Config.lightTheme,
+      darkTheme: MTheme.darkTheme(context),
+      theme: MTheme.lightTheme(context),
       themeMode: ThemeMode.system,
       home: const BottomBar(),
     );
