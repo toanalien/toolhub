@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import "package:get/get.dart";
+import 'package:toolhub/storage.dart';
+import './i10n/translation.dart';
 import './tabs.dart';
 import './theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Storage.start();
   runApp(const MyApp());
 }
 
@@ -13,22 +18,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        // 本地化的代理类
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', 'US'), // 美国英语
-        Locale('zh', 'CN'), // 中文简体
-        //其它Locales
-      ],
+      translations: Translation(),
+      locale: Get.deviceLocale, // translations will be displayed in that locale
+      fallbackLocale: const Locale('en', 'US'),
       darkTheme: MTheme.darkTheme(context),
       theme: MTheme.lightTheme(context),
-      themeMode: ThemeMode.system,
+      themeMode:
+          Storage.app.get("theme") == "dark" ? ThemeMode.dark : ThemeMode.light,
       home: const BottomBar(),
     );
   }

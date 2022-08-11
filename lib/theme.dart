@@ -10,9 +10,11 @@ class MTheme {
     return ThemeData(
       primaryColor: Colors.teal,
       splashColor: Colors.yellow,
+      platform: TargetPlatform.iOS,
       appBarTheme: const AppBarTheme(
         color: Colors.white,
         elevation: 0,
+        foregroundColor: Colors.black87,
         titleTextStyle: TextStyle(
           color: Colors.black,
           fontSize: 18,

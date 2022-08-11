@@ -1,23 +1,49 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
-class Storage {
-  static final Future<SharedPreferences> _prefs =
-      SharedPreferences.getInstance();
+class Preference {
+  static late SharedPreferences prefs;
 
-  static save(String key, String value) async {
-    final SharedPreferences prefs = await _prefs;
-    return prefs.setString(key, value);
-  }
-
-  static get(String key) async {
-    final SharedPreferences prefs = await _prefs;
-    return prefs.getString(key);
+  static Future<void> init() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   static remove(key) async {
-    final SharedPreferences prefs = await _prefs;
-    prefs.remove(key);
+    await prefs.remove(key);
   }
 
-  Storage();
+  Preference();
+}
+
+class IApp {
+  // secure 设置
+  bool sercure;
+  // language
+  String language;
+  // dark/light theme
+  String theme;
+
+  IApp({this.sercure = false, this.language = 'en', this.theme = 'light'});
+}
+
+class IWallet {}
+
+class Storage {
+  static start() async {
+    await Future.wait([
+      Hive.openBox('app'),
+      Hive.openBox('wallet'),
+      Hive.openBox('dapps'),
+      Hive.openBox('data'),
+      Preference.init()
+    ]);
+  }
+
+  static Box get app => Hive.box('app');
+  // 数组形式
+  static Box get wallet => Hive.box('wallet');
+  // 数组形式
+  static Box get dapps => Hive.box('dapps');
+  // 对象形式
+  static Box get data => Hive.box('data');
 }

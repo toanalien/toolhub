@@ -4,6 +4,7 @@ import 'package:toolhub/routes/browser.dart';
 import 'package:toolhub/routes/home/home.dart';
 import 'package:toolhub/routes/message.dart';
 import 'package:toolhub/routes/settings.dart';
+import 'package:toolhub/widgets/session.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -29,6 +30,13 @@ class _BottomBarState extends State<BottomBar> {
     const Message(),
     const SettingPage(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Session.start(context, showAuth);
+  }
 
   Widget buildBody() {
     return PageView.builder(
@@ -74,6 +82,10 @@ class _BottomBarState extends State<BottomBar> {
         ctr.jumpToPage(index);
       },
     );
+  }
+
+  showAuth() {
+    //
   }
 
   @override
