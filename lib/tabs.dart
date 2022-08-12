@@ -5,6 +5,7 @@ import 'package:toolhub/routes/home/home.dart';
 import 'package:toolhub/routes/message.dart';
 import 'package:toolhub/routes/settings.dart';
 import 'package:toolhub/widgets/session.dart';
+import 'package:toolhub/routes/sites.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _BottomBarState extends State<BottomBar> {
 
   static final pages = [
     const HomePage(),
-    const Browser(),
+    const SitesPage(),
     const Message(),
     const SettingPage(),
   ];
