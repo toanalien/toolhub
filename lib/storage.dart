@@ -1,11 +1,19 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+class PrefKeys {
+  static String language = "app.language";
+  static String currency = "app.currency";
+  static String theme = "app.theme";
+  static String security = "app.security";
+}
 
 class Preference {
   static late SharedPreferences prefs;
 
   static Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
+    // 获取基础配置
   }
 
   static remove(key) async {
@@ -30,6 +38,8 @@ class IWallet {}
 
 class Storage {
   static start() async {
+    await Hive.initFlutter();
+
     await Future.wait([
       Hive.openBox('app'),
       Hive.openBox('wallet'),

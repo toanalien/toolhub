@@ -8,6 +8,7 @@ class Translation extends Translations {
           "settings.title": "Settings",
           "settings.language": "Language",
           "settings.currency": "Currency",
+          "settings.security": "Security",
         },
         'de_DE': {
           'hello': 'Hallo Welt',
@@ -17,6 +18,7 @@ class Translation extends Translations {
           "settings.title": "设置",
           "settings.language": "语言",
           "settings.currency": "货币",
+          "settings.security": "安全",
         },
       };
 }

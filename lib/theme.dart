@@ -11,6 +11,10 @@ class MTheme {
       primaryColor: Colors.teal,
       splashColor: Colors.yellow,
       platform: TargetPlatform.iOS,
+      pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      }),
       appBarTheme: const AppBarTheme(
         color: Colors.white,
         elevation: 0,
