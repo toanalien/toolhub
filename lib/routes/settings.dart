@@ -4,7 +4,7 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get/get.dart';
 import 'package:toolhub/storage.dart';
-import 'package:flutter/cupertino.dart';
+import '../widgets/widgets.dart';
 import '../navigator.dart';
 import './mine/help.dart';
 
@@ -129,7 +129,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 value: Text(languages[Get.locale!.languageCode]!),
                 onPressed: (BuildContext context) {
-                  openSelector(context, languages, (key) {
+                  SelectModal.open(context, languages, (key) {
                     Get.updateLocale(Locale(key));
                   });
                 },
@@ -144,7 +144,7 @@ class _SettingPageState extends State<SettingPage> {
                 ),
                 value: Text(currency.substring(0, 1)),
                 onPressed: ((context) {
-                  openSelector(context, currencies, (key) {});
+                  SelectModal.open(context, currencies, (key) {});
                 }),
               ),
               SettingsTile.switchTile(
@@ -166,46 +166,6 @@ class _SettingPageState extends State<SettingPage> {
           ...MoreSetting
         ],
       ),
-    );
-  }
-
-  openSelector(
-      BuildContext context, Map<String, String> languages, Function onSelect) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      context: context,
-      builder: ((context) {
-        return SafeArea(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: languages.entries
-                  .map(
-                    (e) => TextButton(
-                      onPressed: () {
-                        onSelect(e.key);
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            e.value,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ),
-        );
-      }),
     );
   }
 }
