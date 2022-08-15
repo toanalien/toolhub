@@ -93,11 +93,6 @@ class _SettingPageState extends State<SettingPage> {
           SettingsSection(
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.contact_page),
-                title: Text('地址簿'),
-                // value: Text('English'),
-              ),
-              SettingsTile.navigation(
                 leading: Icon(Icons.notifications),
                 title: Text('通知'),
                 onPressed: (context) {
@@ -168,6 +163,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ],
           ),
+          ...MoreSetting
         ],
       ),
     );
@@ -213,3 +209,39 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 }
+
+var MoreSetting = [
+  SettingsSection(
+    title: Text('STATE RESTORATION TESTING'),
+    tiles: [
+      SettingsTile.switchTile(
+        onToggle: (_) {},
+        initialValue: false,
+        title: Text(
+          'Fast App Termination',
+        ),
+        description: Text(
+          'Terminate instead of suspending apps when backgrounded to '
+          'force apps to be relaunched when tray '
+          'are foregrounded.',
+        ),
+      ),
+    ],
+  ),
+  SettingsSection(
+    title: Text('IAD DEVELOPER APP TESTING'),
+    tiles: [
+      SettingsTile.navigation(
+        title: Text('Fill Rate'),
+      ),
+      SettingsTile.navigation(
+        title: Text('Add Refresh Rate'),
+      ),
+      SettingsTile.switchTile(
+        onToggle: (_) {},
+        initialValue: false,
+        title: Text('Unlimited Ad Presentation'),
+      ),
+    ],
+  ),
+];
