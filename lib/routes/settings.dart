@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get/get.dart';
-import 'package:toolhub/storage.dart';
+import 'package:toolhub/services/storage.dart';
 import '../widgets/widgets.dart';
 import '../navigator.dart';
 import './mine/help.dart';

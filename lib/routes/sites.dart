@@ -30,8 +30,16 @@ class _SitesPageState extends State<SitesPage> {
             height: 20,
           ),
           SizedBox(
+            height: 60,
+            child: SiteList(
+              title: '常用',
+            ),
+          ),
+          SizedBox(
             height: 200,
-            child: SiteList(),
+            child: SiteList(
+              title: '推荐',
+            ),
           ),
         ],
       ),

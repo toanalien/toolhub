@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
-import 'package:toolhub/storage.dart';
+import 'package:toolhub/services/storage.dart';
+import 'package:flutter_app_lock/flutter_app_lock.dart';
 import './i10n/translation.dart';
 import './tabs.dart';
 import './theme.dart';
+import './widgets/login.dart';
+import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Duration backgroundLockLatency = const Duration(seconds: 30);
 
   await Storage.start();
-  runApp(const MyApp());
+
+  runApp(
+    AppLock(
+      builder: (args) => const ToolApp(),
+      lockScreen: const LoginScreen(),
+      backgroundLockLatency: backgroundLockLatency,
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ToolApp extends StatelessWidget {
+  const ToolApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -28,7 +39,9 @@ class MyApp extends StatelessWidget {
       theme: MTheme.lightTheme(context),
       themeMode:
           Storage.app.get("theme") == "dark" ? ThemeMode.dark : ThemeMode.light,
-      home: const BottomBar(),
+      home: AppLocker(
+        child: const BottomBar(),
+      ),
     );
   }
 }

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
-import "../storage.dart";
+import 'package:flutter_app_lock/flutter_app_lock.dart';
+import '../services/storage.dart';
+import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  unlock(context) {
+    AppLock.of(context)!.didUnlock();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -33,22 +40,27 @@ class LoginScreen extends StatelessWidget {
                     //implement biometric auth here
                   },
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(20),
                     backgroundColor: Colors.blue,
                     shadowColor: const Color(0xFF323247),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'LOGIN WITH BIOMETRICS',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          wordSpacing: 1.2,
-                        ),
-                      ),
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            // unlock(context);
+                            print('do unlock');
+                            unlock(context);
+                          },
+                          child: const Text(
+                            'LOGIN WITH BIOMETRICS',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              // fontWeight: FontWeight.w600,
+                              // wordSpacing: 1.2,
+                            ),
+                          )),
                     ],
                   ),
                 ),
@@ -159,11 +171,11 @@ class AuthService {
       try {
         isAuthenticated = await localAuthentication.authenticate(
           localizedReason: 'Scan your fingerprint to authenticate',
-          options: const AuthenticationOptions(
-            biometricOnly: true,
-            useErrorDialogs: true,
-            stickyAuth: true,
-          ),
+          // options: const AuthenticationOptions(
+          //   biometricOnly: true,
+          //   useErrorDialogs: true,
+          //   stickyAuth: true,
+          // ),
         );
       } on PlatformException catch (e) {
         print(e);
@@ -179,5 +191,52 @@ class AuthService {
       );
     }
     return isAuthenticated;
+  }
+}
+
+class AppLocker extends StatefulWidget {
+  final Widget child;
+  const AppLocker({Key? key, required this.child}) : super(key: key);
+
+  @override
+  State<AppLocker> createState() => _AppLockerState();
+}
+
+class _AppLockerState extends State<AppLocker> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('show biometric auth');
+      // showLock();
+    });
+  }
+
+  void showLock() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return ScreenLock(
+          customizedButtonChild: Icon(
+            Icons.fingerprint,
+            size: 40,
+          ),
+          customizedButtonTap: () async {
+            // await localAuth(context);
+          },
+          correctString: '1234',
+          didUnlocked: () {
+            print('unlocked');
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }
