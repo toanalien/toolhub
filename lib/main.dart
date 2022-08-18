@@ -7,12 +7,18 @@ import './tabs.dart';
 import './theme.dart';
 import './widgets/login.dart';
 import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+// import 'package:flutter_trust_wallet_core/flutter_trust_wallet_core.dart';
+import 'package:trust_wallet_core_lib/trust_wallet_core_lib.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Duration backgroundLockLatency = const Duration(seconds: 30);
 
   await Storage.start();
+
+  // FlutterTrustWalletCore.init();
+  // FlutterTrustWalletCore.
+  TrustWalletCoreLib.init();
 
   runApp(
     AppLock(

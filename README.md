@@ -56,3 +56,7 @@ https://pub.dev/packages/local_auth
 share_plus: ^4.0.10
 
 https://pub.dev/packages/share_plus
+
+## Wallet_Connect
+
+https://pub.dev/packages/wallet_connect

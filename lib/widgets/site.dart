@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../routes/browser.dart';
+import '../navigator.dart';
 
 class SiteWidget extends StatelessWidget {
   const SiteWidget({Key? key}) : super(key: key);
@@ -51,8 +53,16 @@ class SiteList extends StatelessWidget {
               Icon(Icons.free_breakfast),
             ]
                 .map(
-                  (e) => Column(
-                    children: [e, Text('123')],
+                  (e) => GestureDetector(
+                    onTap: () {
+                      MNavigator.push(
+                        context,
+                        (ctx, arguments) => const Browser(),
+                      );
+                    },
+                    child: Column(
+                      children: [e, Text('123')],
+                    ),
                   ),
                 )
                 .toList(),

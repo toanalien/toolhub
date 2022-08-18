@@ -13,7 +13,8 @@ class Browser extends StatefulWidget {
 class _BrowserState extends State<Browser> {
   final GlobalKey webViewKey = GlobalKey();
 
-  Uri url = Uri.parse('https://www.baidu.com');
+  Uri url = Uri.parse('http://127.0.0.1:8000');
+  String title = "";
 
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
@@ -85,6 +86,9 @@ class _BrowserState extends State<Browser> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       body: SafeArea(
         // top: false,
         child: Column(
@@ -99,36 +103,40 @@ class _BrowserState extends State<Browser> {
                     backgroundColor: Colors.teal.shade100,
                   )
                 : Container(),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 12.0,
-                right: 12.0,
-                top: 8.0,
-                bottom: 8.0,
-              ),
-              child: TextField(
-                decoration: MTheme.input.copyWith(
-                  hintText: '请输入地址',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      webViewController?.reload();
-                    },
-                    icon: const Icon(
-                      Icons.refresh,
-                    ),
-                  ),
-                ),
-                keyboardType: TextInputType.url,
-                onSubmitted: (value) {
-                  setState(() {
-                    url = Uri.parse(value);
-                  });
-                  webViewController?.loadUrl(urlRequest: URLRequest(url: url));
-                },
-              ),
-            ),
+            buildLocationBar(),
           ],
         ),
+      ),
+    );
+  }
+
+  Padding buildLocationBar() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 12.0,
+        right: 12.0,
+        top: 8.0,
+        bottom: 8.0,
+      ),
+      child: TextField(
+        decoration: MTheme.input.copyWith(
+          hintText: '请输入地址',
+          suffixIcon: IconButton(
+            onPressed: () {
+              webViewController?.reload();
+            },
+            icon: const Icon(
+              Icons.refresh,
+            ),
+          ),
+        ),
+        keyboardType: TextInputType.url,
+        onSubmitted: (value) {
+          setState(() {
+            url = Uri.parse(value);
+          });
+          webViewController?.loadUrl(urlRequest: URLRequest(url: url));
+        },
       ),
     );
   }
