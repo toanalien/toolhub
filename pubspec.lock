@@ -726,13 +726,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.4.9"
-  trust_wallet_core_lib:
+  trust_wallet_core:
     dependency: "direct main"
     description:
-      name: trust_wallet_core_lib
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.6+2.9.6"
+      path: "."
+      ref: HEAD
+      resolved-ref: b1e308edc293b624836e67d5b4a1fcdaff51cf49
+      url: "https://ghproxy.com/github.com/weishirongzhen/flutter_trust_wallet_core"
+    source: git
+    version: "0.0.5"
   typed_data:
     dependency: transitive
     description:

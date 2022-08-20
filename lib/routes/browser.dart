@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:toolhub/theme.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:io';
+import 'package:wallet_connect/wallet_connect.dart';
 
 class Browser extends StatefulWidget {
-  const Browser({Key? key}) : super(key: key);
+  final String url;
+  const Browser({Key? key, required this.url}) : super(key: key);
 
   @override
   State<Browser> createState() => _BrowserState();
@@ -13,7 +15,6 @@ class Browser extends StatefulWidget {
 class _BrowserState extends State<Browser> {
   final GlobalKey webViewKey = GlobalKey();
 
-  Uri url = Uri.parse('http://127.0.0.1:8000');
   String title = "";
 
   InAppWebViewController? webViewController;
@@ -34,9 +35,40 @@ class _BrowserState extends State<Browser> {
 
   double progress = 0;
 
+  late Uri _uri;
+
+  final wcClient = WCClient(
+    onConnect: () {
+      // Respond to connect callback
+    },
+    onDisconnect: (code, reason) {
+      // Respond to disconnect callback
+      print('code: $code, reason: $reason');
+    },
+    onFailure: (error) {
+      // Respond to connection failure callback
+    },
+    onSessionRequest: (id, peerMeta) {
+      // Respond to connection request callback
+    },
+    onEthSign: (id, message) {
+      // Respond to personal_sign or eth_sign or eth_signTypedData request callback
+    },
+    onEthSendTransaction: (id, tx) {
+      // Respond to eth_sendTransaction request callback
+    },
+    onEthSignTransaction: (id, tx) {
+      // Respond to eth_signTransaction request callback
+    },
+  );
+
   @override
   void initState() {
     super.initState();
+
+    setState(() {
+      _uri = Uri.parse(widget.url);
+    });
 
     pullToRefreshController = PullToRefreshController(
       options: PullToRefreshOptions(
@@ -57,14 +89,20 @@ class _BrowserState extends State<Browser> {
     return InAppWebView(
       key: webViewKey,
       initialUrlRequest: URLRequest(
-        url: url,
+        url: _uri,
       ),
       onWebViewCreated: (controller) {
-        webViewController = controller;
+        print('created');
       },
       pullToRefreshController: pullToRefreshController,
       onLoadStop: (controller, url) async {
         pullToRefreshController.endRefreshing();
+        controller.getTitle().then((value) {
+          print('title: $value');
+          setState(() {
+            title = value ?? "";
+          });
+        });
       },
       onProgressChanged: (controller, progress) {
         if (progress == 100) {
@@ -88,14 +126,12 @@ class _BrowserState extends State<Browser> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        title: Text(title),
       ),
       body: SafeArea(
         // top: false,
         child: Column(
           children: [
-            Expanded(
-              child: buildBrowser(),
-            ),
             progress < 1.0
                 ? LinearProgressIndicator(
                     value: progress,
@@ -103,7 +139,10 @@ class _BrowserState extends State<Browser> {
                     backgroundColor: Colors.teal.shade100,
                   )
                 : Container(),
-            buildLocationBar(),
+            Expanded(
+              child: buildBrowser(),
+            ),
+            // buildLocationBar(),
           ],
         ),
       ),
@@ -133,9 +172,9 @@ class _BrowserState extends State<Browser> {
         keyboardType: TextInputType.url,
         onSubmitted: (value) {
           setState(() {
-            url = Uri.parse(value);
+            _uri = Uri.parse(value);
           });
-          webViewController?.loadUrl(urlRequest: URLRequest(url: url));
+          webViewController?.loadUrl(urlRequest: URLRequest(url: _uri));
         },
       ),
     );
