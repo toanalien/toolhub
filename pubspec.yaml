@@ -39,7 +39,7 @@ dependencies:
   shared_preferences: ^2.0.15
   settings_ui: ^2.0.2
   introduction_screen: ^3.0.2
-  # local_auth: ^2.1.1
+  local_auth: ^2.1.0
   get: ^4.6.5
   readmore: ^2.2.0
   install_plugin_v2: ^1.0.0
