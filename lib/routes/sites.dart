@@ -17,7 +17,7 @@ class _SitesPageState extends State<SitesPage> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Padding(
@@ -26,20 +26,24 @@ class _SitesPageState extends State<SitesPage> {
               decoration: MTheme.input,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          SizedBox(
-            height: 60,
-            child: SiteList(
-              title: '常用',
-            ),
+          const SizedBox(
+            height: 80,
+            child: SiteList(title: '常用', sites: [
+              {'url': 'https://zapper.fi/zh', 'title': "Zapper"}
+            ]),
           ),
-          SizedBox(
+          const SizedBox(
             height: 200,
-            child: SiteList(
-              title: '推荐',
-            ),
+            child: SiteList(title: '推荐', sites: [
+              {'url': 'https://localcryptos.com', 'title': "LocalCryptos"},
+              {
+                'url': 'https://unstoppabledomains.com/auth',
+                "title": "unstopable"
+              }
+            ]),
           ),
         ],
       ),

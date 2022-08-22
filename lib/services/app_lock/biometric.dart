@@ -48,8 +48,8 @@ abstract class PlatformBiometrics {
     try {
       final didAuthenticate = await _localAuth.authenticate(
         localizedReason: localizedReason,
-        useErrorDialogs: false,
-        stickyAuth: true,
+        // useErrorDialogs: false,
+        // stickyAuth: true,
       );
 
       return didAuthenticate;
