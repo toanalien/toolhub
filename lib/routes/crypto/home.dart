@@ -14,6 +14,11 @@ class Pocket extends StatefulWidget {
 class _PocketState extends State<Pocket> {
   WServies wallet = WServies.fromPrivateKey();
 
+  var token = Token(
+    address: '0x1a106986c0b44b48a03a30d278a06ae7717f54a8',
+    coin: Coin.ethereum,
+  );
+
   @override
   void initState() {
     getBalance();
@@ -21,10 +26,13 @@ class _PocketState extends State<Pocket> {
   }
 
   Future getBalance() async {
-    var token = Token(address: '0x1a106986c0b44b48a03a30d278a06ae7717f54a8');
     var balance =
         await token.balanceOf('0xa4F5c5666D74962D7f52F7Ea7b32eE969Ca59664');
     log('balance : $balance , address : ${wallet.address}');
+  }
+
+  Future send() async {
+    token.send('0x77daf031e517efcdfe8a3d1b2dd52e33baaadb56', 0.5);
   }
 
   @override
@@ -38,6 +46,18 @@ class _PocketState extends State<Pocket> {
         child: Column(
           children: [
             Text('Pocket'),
+            TextButton(
+              onPressed: () {
+                getBalance();
+              },
+              child: Text('Get Balance'),
+            ),
+            TextButton(
+              onPressed: () {
+                send();
+              },
+              child: Text('Send'),
+            ),
           ],
         ),
       ),
