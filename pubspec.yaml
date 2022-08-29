@@ -56,10 +56,9 @@ dependencies:
   awesome_extensions: ^2.0.3
   web3dart: 2.3.5
   wallet_connect: ^1.0.2
-  trust_wallet_core: 
-    git: https://ghproxy.com/github.com/weishirongzhen/flutter_trust_wallet_core
-
-
+  flutter_slidable: ^0.6.0
+  dotted_border: ^2.0.0+2
+  trust_wallet_core_lib: ^0.0.6+2.9.6
 
 dev_dependencies:
   flutter_test:

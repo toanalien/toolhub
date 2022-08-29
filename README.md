@@ -60,3 +60,7 @@ https://pub.dev/packages/share_plus
 ## Wallet_Connect
 
 https://pub.dev/packages/wallet_connect
+
+## 命令
+1. 执行 generator `flutter packages pub run build_runner build`
+2. 
