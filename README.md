@@ -70,6 +70,10 @@ location ~* ^\/(\w+) {
 
 https://pub.dev/packages/wallet_connect
 
+- USDT: 
+0x1a106986c0b44b48a03a30d278a06ae7717f54a8
+
+
 ## 命令
 1. 执行 generator `flutter packages pub run build_runner build`
 2. 

@@ -6,10 +6,8 @@ import './i10n/translation.dart';
 import './tabs.dart';
 import './theme.dart';
 import './widgets/login.dart';
-import 'package:flutter_screen_lock/flutter_screen_lock.dart';
-import 'package:trust_wallet_core/flutter_trust_wallet_core.dart';
-// import 'package:trust_wallet_core/trust_wallet_core.dart';
-// import 'package:trust_wallet_core_lib/trust_wallet_core_lib.dart';
+// import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+import 'package:trust_wallet_core_lib/trust_wallet_core_lib.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,9 +15,7 @@ void main() async {
 
   await Storage.start();
 
-  FlutterTrustWalletCore.init();
-
-  // TrustWalletCoreLib.init();
+  TrustWalletCoreLib.init();
 
   runApp(
     AppLock(

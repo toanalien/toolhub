@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:web3dart/web3dart.dart';
+import '../../services/web3/models.dart';
 import './service/service.dart';
 
 class Pocket extends StatefulWidget {
@@ -14,13 +16,15 @@ class _PocketState extends State<Pocket> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    getBalance();
     super.initState();
+  }
 
-    Credentials fromHex = EthPrivateKey.fromHex(wallet.pk);
-    fromHex.extractAddress().then((value) => print("address: $value"));
-
-    // print('address ${wallet.address}');
+  Future getBalance() async {
+    var token = Token(address: '0x1a106986c0b44b48a03a30d278a06ae7717f54a8');
+    var balance =
+        await token.balanceOf('0xa4F5c5666D74962D7f52F7Ea7b32eE969Ca59664');
+    log('balance : $balance , address : ${wallet.address}');
   }
 
   @override
