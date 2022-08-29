@@ -57,6 +57,15 @@ share_plus: ^4.0.10
 
 https://pub.dev/packages/share_plus
 
+## Nginx 多应用
+
+```
+location ~* ^\/(\w+) {
+    root /publish_webapp/;
+    index index.html;
+    try_files $uri $uri/ $uri/index.html /$1/ /$1/index.html;
+}
+```
 ## Wallet_Connect
 
 https://pub.dev/packages/wallet_connect
