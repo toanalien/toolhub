@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:toolhub/navigator.dart';
 import 'package:toolhub/routes/crypto/home.dart';
 

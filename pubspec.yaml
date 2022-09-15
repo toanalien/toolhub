@@ -45,7 +45,7 @@ dependencies:
   install_plugin_v2: ^1.0.0
   flutter_update_dialog: ^2.0.0
   dio: ^4.0.6
-  flutter_inappwebview: ^5.4.3+7
+  flutter_inappwebview: 5.4.3+7
   local_session_timeout: ^2.0.0
   http: ^0.13.5
   hive: ^2.2.3

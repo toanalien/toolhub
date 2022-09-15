@@ -19,8 +19,8 @@ class Coin {
   const Coin({required this.rpc});
 
   static const Coin ethereum = Coin(
-    rpc: "https://rpc.ankr.com/eth_rinkeby",
-    // rpc: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+    // rpc: "https://rpc.ankr.com/eth_rinkeby",
+    rpc: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
   );
 
   static const Coin bsc = Coin(rpc: 'https://rpc.ankr.com/bsc_testnet_chapel');

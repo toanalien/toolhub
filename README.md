@@ -77,3 +77,11 @@ https://pub.dev/packages/wallet_connect
 ## 命令
 1. 执行 generator `flutter packages pub run build_runner build`
 2. 
+
+
+### Fix 
+```
+  cannot be marked potentially unavailable with '@available'
+        @available(iOS 14.0, *)
+```
+https://github.com/pichillilorenzo/flutter_inappwebview/commit/06f87e81c4f55b7b251a149ec0db60442bb351c3
