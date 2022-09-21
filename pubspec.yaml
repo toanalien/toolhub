@@ -60,6 +60,7 @@ dependencies:
   flutter_slidable: ^0.6.0
   dotted_border: ^2.0.0+2
   trust_wallet_core_lib: ^0.0.6+2.9.6
+  web3_provider: ^1.0.1
 
 dev_dependencies:
   flutter_test:
