@@ -50,6 +50,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.3"
+  base_x:
+    dependency: transitive
+    description:
+      name: base_x
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -57,6 +64,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0"
+  bs58:
+    dependency: "direct main"
+    description:
+      name: bs58
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.2"
   build:
     dependency: transitive
     description:
@@ -372,7 +386,7 @@ packages:
     source: hosted
     version: "2.1.0"
   hex:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: hex
       url: "https://pub.flutter-io.cn"
@@ -943,6 +957,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.1"
+  yumeeting_app_upgrade:
+    dependency: "direct main"
+    description:
+      name: yumeeting_app_upgrade
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.2.1"
 sdks:
   dart: ">=2.17.6 <3.0.0"
   flutter: ">=2.10.0"

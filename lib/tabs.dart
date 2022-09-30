@@ -1,7 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:toolhub/routes/browser.dart';
-import 'package:toolhub/routes/home/home.dart';
+import 'package:toolhub/routes/home.dart';
 import 'package:toolhub/routes/message.dart';
 import 'package:toolhub/routes/settings.dart';
 import 'package:toolhub/widgets/session.dart';

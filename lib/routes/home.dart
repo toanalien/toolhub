@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toolhub/navigator.dart';
 import 'package:toolhub/routes/browser.dart';
 import 'package:toolhub/routes/crypto/home.dart';
+import 'package:toolhub/routes/tron.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,9 +26,18 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10.0),
             child: IconButton(
               onPressed: () {
+                MNavigator.push(context, (ctx, arguments) => const TronTransactionPage());
+              },
+              icon: Icon(Icons.home_filled),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: IconButton(
+              onPressed: () {
                 MNavigator.push(context, (ctx, arguments) => const Pocket());
               },
-              icon: Icon(Icons.wallet),
+              icon: Icon(Icons.badge),
             ),
           ),
           Padding(
@@ -41,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              icon: Icon(Icons.wallet),
+              icon: Icon(Icons.open_in_browser),
             ),
           )
         ],

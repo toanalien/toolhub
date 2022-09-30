@@ -61,6 +61,9 @@ dependencies:
   dotted_border: ^2.0.0+2
   trust_wallet_core_lib: ^0.0.6+2.9.6
   web3_provider: ^1.0.1
+  bs58: ^1.0.2
+  hex: ^0.2.0
+  yumeeting_app_upgrade: ^1.2.1
 
 dev_dependencies:
   flutter_test:

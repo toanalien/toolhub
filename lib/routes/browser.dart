@@ -59,7 +59,9 @@ mixin Web3ProviderMixin<T extends StatefulWidget> on State<T> {
 
   /// Callback handle data receive from dapp
   Future<void> _jsBridgeCallBack(
-      String message, InAppWebViewController controller) async {
+    String message,
+    InAppWebViewController controller,
+  ) async {
     Map<dynamic, dynamic> params = JsonUtil.getObj(message);
     final name = params["name"];
     final id = params["id"];
