@@ -5,23 +5,16 @@
 
     const trongrid = 'https://nile.trongrid.io';
     const trongridRpc = "https://nile.trongrid.io/jsonrpc";
+    const tronPrivatekey = "eda1f4bcb5e6c80cef3d520e5d27cf1195c3f1b829b63dd44b75f2c9d4992ce9";
+    var ownerAddress = 'TYA2pyNP6Xf9VAd7w12P66vFNSSaXvVsQj';
+    var toAddress = 'TKaUvCJBEEbJX35ZJzuULnvYL8bsXS9aB6';
+    var usdt = 'TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj';
     
     const api = axios.create({
         baseURL: trongrid,
         timeout: 10000,
     });
     async function query() {
-        console.log("tronweb: ", window.tronWeb);
-  
-        const tronPrivatekey = "eda1f4bcb5e6c80cef3d520e5d27cf1195c3f1b829b63dd44b75f2c9d4992ce9";
-
-        var ownerAddress = 'TYA2pyNP6Xf9VAd7w12P66vFNSSaXvVsQj';
-        var toAddress = 'TKaUvCJBEEbJX35ZJzuULnvYL8bsXS9aB6';
-
-        var {data: block} = await api.post("/wallet/getblock", {detail: false});
-
-        console.log('block: ', block);
-
         // 获取 transaction
         var {data: transaction} = await api.post("/wallet/createtransaction",
         {
@@ -106,9 +99,65 @@
         console.log(res);
     }
 
+    function encodeParams(inputs) {
+        var { AbiCoder } = tronWeb.utils.ethersUtils;
+        const ADDRESS_PREFIX_REGEX = /^(41)/;
+        const ADDRESS_PREFIX = "41";
+
+        let typesValues = inputs
+        let parameters = ''
+    
+        if (typesValues.length == 0)
+            return parameters
+        const abiCoder = new AbiCoder();
+        let types = [];
+        const values = [];
+    
+        for (let i = 0; i < typesValues.length; i++) {
+            let {type, value} = typesValues[i];
+            if (type == 'address')
+                value = value.replace(ADDRESS_PREFIX_REGEX, '0x');
+            else if (type == 'address[]')
+                value = value.map(v => toHex(v).replace(ADDRESS_PREFIX_REGEX, '0x'));
+            types.push(type);
+            values.push(value);
+        }
+    
+        console.log(types, values)
+        try {
+            parameters = abiCoder.encode(types, values).replace(/^(0x)/, '');
+        } catch (ex) {
+            console.log(ex);
+        }
+        return parameters
+    }
+
+    async function trigger_contract() {
+        // var transaction = await api.post("/wallet/triggersmartcontract", {
+        //     owner_address: tronWeb.address.toHex(ownerAddress),
+        //     contract_address: tronWeb.address.toHex(ownerAddress),
+        //     function_selector: 'transfer(address,uint256)',
+        //     parameter: []
+        // })
+        // let contract = await tronWeb.contract().at(usdt);
+        // let result = await contract.transfer(toAddress, 10000).call();
+        // // .send({feeLimit: 1000000});
+        // console.log('result: ', result);
+
+        let inputs = [
+            {type: 'address', value: "412ed5dd8a98aea00ae32517742ea5289761b2710e"},
+            {type: 'uint256', value: 50000000000}
+        ]
+        let parameters = await encodeParams(inputs)
+        console.log(parameters)
+        console.log('0000000000000000000000002ed5dd8a98aea00ae32517742ea5289761b2710e0000000000000000000000000000000000000000000000000000000000000ba43b7400');
+    }
+
     window.onload = async function () {
-        const {transaction, signature } = await query();
-        await send(transaction, signature);
+        // const {transaction, signature } = await query();
+        // await send(transaction, signature);
+
+        trigger_contract();
 
         // window.verify = function() {
         //     verifyByResponse(transaction.txID, signature);
