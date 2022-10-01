@@ -11,6 +11,7 @@ import "package:dio/dio.dart";
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import "./tron/token.g.dart";
+import './tron/tron_node.dart';
 
 final api = Dio(
   BaseOptions(baseUrl: 'https://nile.trongrid.io'),
@@ -18,7 +19,7 @@ final api = Dio(
 
 var ownerAddress = 'TYA2pyNP6Xf9VAd7w12P66vFNSSaXvVsQj';
 var toAddress = 'TKaUvCJBEEbJX35ZJzuULnvYL8bsXS9aB6';
-// var privatekey = 'eda1f4bcb5e6c80cef3d520e5d27cf1195c3f1b829b63dd44b75f2c9d4992ce9';
+var privatekey = 'eda1f4bcb5e6c80cef3d520e5d27cf1195c3f1b829b63dd44b75f2c9d4992ce9';
 
 class TronTransactionPage extends StatefulWidget {
   const TronTransactionPage({super.key});
@@ -33,9 +34,14 @@ class _TronTransactionPageState extends State<TronTransactionPage> {
     super.initState();
     // print("res: $res");
     // encode();
+    sendToken();
   }
 
-  encode() {
+  String contractAddres = 'TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj';
+  String ownerAddress = 'TYA2pyNP6Xf9VAd7w12P66vFNSSaXvVsQj';
+  String toAddress = 'TKaUvCJBEEbJX35ZJzuULnvYL8bsXS9aB6';
+
+  String encode() {
     var token = Token(
       address:
           EthereumAddress.fromHex('0x1A106986C0B44B48A03a30d278a06AE7717f54a8'),
@@ -44,23 +50,52 @@ class _TronTransactionPageState extends State<TronTransactionPage> {
         Client(),
       ),
     );
-
+    String co = getBase58Address(contractAddres);
+    log('co: $co');
+    String from = getBase58Address(ownerAddress);
+    log('fr $from');
+    String to = getBase58Address(toAddress);
+    log('to: $to');
     var parameters = [
-      EthereumAddress.fromHex('2ed5dd8a98aea00ae32517742ea5289761b2710e'),
+      EthereumAddress.fromHex(to.replaceFirst(r'41', '0x')),
       BigInt.from(50000000000)
     ];
-  
+
     var func = token.self.function('transfer');
 
     var encode = func.encodeCall(parameters);
     var selector = func.encodeName();
-    var str = bytesToHex(encode).substring(2);
-    log('selector: $selector');
+    var str = bytesToHex(encode).replaceAll('a9059cbb', '');
+    // utf8.encode
+    log('selector: ${bytesToHex(utf8.encode('transfer'))} $selector');
     log('gen: $str');
-    log('tar: 0000000000000000000000002ed5dd8a98aea00ae32517742ea5289761b2710e0000000000000000000000000000000000000000000000000000000000000ba43b7400');
+    log('tar: 0000000000000000000000006964fa12b2a9f542e4eaf382416862824c1f72800000000000000000000000000000000000000000000000000000000ba43b7400');
+
+    return str;
   }
 
-  sendToken() async {}
+  sendToken() async {
+    // trigger contract
+    var payload = {
+      "owner_address": getBase58Address(ownerAddress),
+      "contract_address": getBase58Address(contractAddres),
+      "function_selector": "transfer(address,uint256)",
+      "call_value": 0,
+      "visible": false,
+      'parameter': encode() + HEX.encode(utf8.encode('test')) 
+    };
+
+    var response = await api.post('/wallet/triggersmartcontract', data: payload);
+    var transaction = response.data['transaction'];
+    log('transaction: $transaction');
+
+    var node = TronNode(privateKey: privatekey, ownerAddress: ownerAddress);
+    var sig = node.sign(transaction['txID']);
+    transaction['signature'] = [sig];
+
+    var send = await api.post("/wallet/broadcasttransaction", data: transaction);
+    log('send: $send');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +104,22 @@ class _TronTransactionPageState extends State<TronTransactionPage> {
         title: Text("Sign Tron"),
       ),
       body: Center(
-        child: TextButton(
-          child: Text('ok'),
-          onPressed: () {
-            encode();
-          },
+        child: Column(
+          children: [
+            TextButton(
+              child: Text('ok'),
+              onPressed: () {
+                sendToken();
+
+              },
+            ),
+            TextButton(
+              child: Text('Send'),
+              onPressed: () {
+                sendToken();
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -23,7 +23,7 @@ class TronNode {
 
   TronNode({required this.privateKey, required this.ownerAddress});
 
-  sign(String txID) async {
+  sign(String txID) {
     var key = EthPrivateKey.fromHex(privateKey);
 
     final list = crypto.hexToBytes(txID);
@@ -60,7 +60,7 @@ class TronNode {
     var payload = data['raw_data'];
     var txID = data['txID'];
 
-    var signature = await sign(txID);
+    var signature = sign(txID);
 
     var broadcast = await api.post('/wallet/broadcasttransaction', data: {
       'raw_data': json.encode(payload),

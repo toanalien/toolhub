@@ -143,14 +143,15 @@
         // let result = await contract.transfer(toAddress, 10000).call();
         // // .send({feeLimit: 1000000});
         // console.log('result: ', result);
-
+        var address = tronWeb.address.toHex('TKaUvCJBEEbJX35ZJzuULnvYL8bsXS9aB6');
         let inputs = [
-            {type: 'address', value: "412ed5dd8a98aea00ae32517742ea5289761b2710e"},
+            {type: 'address', value: address},
             {type: 'uint256', value: 50000000000}
         ]
         let parameters = await encodeParams(inputs)
         console.log(parameters)
-        console.log('0000000000000000000000002ed5dd8a98aea00ae32517742ea5289761b2710e0000000000000000000000000000000000000000000000000000000000000ba43b7400');
+        // console.log('0000000000000000000000002ed5dd8a98aea00ae32517742ea5289761b2710e0000000000000000000000000000000000000000000000000000000ba43b7400');
+        // console.log('0000000000000000000000002ed5dd8a98aea00ae32517742ea5289761b2710e0000000000000000000000000000000000000000000000000000000000000ba43b7400');
     }
 
     window.onload = async function () {
