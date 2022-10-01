@@ -75,25 +75,9 @@ class _TronTransactionPageState extends State<TronTransactionPage> {
   }
 
   sendToken() async {
-    // trigger contract
-    var payload = {
-      "owner_address": getBase58Address(ownerAddress),
-      "contract_address": getBase58Address(contractAddres),
-      "function_selector": "transfer(address,uint256)",
-      "call_value": 0,
-      "visible": false,
-      'parameter': encode() + HEX.encode(utf8.encode('test')) 
-    };
-
-    var response = await api.post('/wallet/triggersmartcontract', data: payload);
-    var transaction = response.data['transaction'];
-    log('transaction: $transaction');
-
     var node = TronNode(privateKey: privatekey, ownerAddress: ownerAddress);
-    var sig = node.sign(transaction['txID']);
-    transaction['signature'] = [sig];
-
-    var send = await api.post("/wallet/broadcasttransaction", data: transaction);
+    var send = await node.sendToken(amount: 500000, toAddress: toAddress, contractAddres: contractAddres);
+    
     log('send: $send');
   }
 
