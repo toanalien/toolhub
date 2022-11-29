@@ -12,18 +12,22 @@ PODS:
   - OrderedSet (5.0.0)
   - path_provider_ios (0.0.1):
     - Flutter
+  - share_plus (0.0.1):
+    - Flutter
   - shared_preferences_ios (0.0.1):
     - Flutter
-  - SwiftProtobuf (1.19.1)
+  - SwiftProtobuf (1.20.3)
   - trust_wallet_core_lib (0.0.1):
     - Flutter
     - TrustWalletCore
-  - TrustWalletCore (2.9.8):
-    - TrustWalletCore/Core (= 2.9.8)
-  - TrustWalletCore/Core (2.9.8):
+  - TrustWalletCore (3.1.4):
+    - TrustWalletCore/Core (= 3.1.4)
+  - TrustWalletCore/Core (3.1.4):
     - TrustWalletCore/Types
-  - TrustWalletCore/Types (2.9.8):
+  - TrustWalletCore/Types (3.1.4):
     - SwiftProtobuf
+  - url_launcher_ios (0.0.1):
+    - Flutter
   - yumeeting_app_upgrade (0.0.1):
     - Flutter
 
@@ -32,8 +36,10 @@ DEPENDENCIES:
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - trust_wallet_core_lib (from `.symlinks/plugins/trust_wallet_core_lib/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - yumeeting_app_upgrade (from `.symlinks/plugins/yumeeting_app_upgrade/ios`)
 
 SPEC REPOS:
@@ -51,10 +57,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/local_auth_ios/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   trust_wallet_core_lib:
     :path: ".symlinks/plugins/trust_wallet_core_lib/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   yumeeting_app_upgrade:
     :path: ".symlinks/plugins/yumeeting_app_upgrade/ios"
 
@@ -64,10 +74,12 @@ SPEC CHECKSUMS:
   local_auth_ios: 0d333dde7780f669e66f19d2ff6005f3ea84008d
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  SwiftProtobuf: 59d9ea2eb5f84b509f32d170a65f3348ae758f1e
+  SwiftProtobuf: b02b5075dcf60c9f5f403000b3b0c202a11b6ae1
   trust_wallet_core_lib: 1d25320104cd3a7fee634d5f57596200da2b5d7c
-  TrustWalletCore: 53f09313edb1c010de78314d023c67d2d4654864
+  TrustWalletCore: 731b3252f0573e4c854aa0a8967a15c8aeb65a41
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   yumeeting_app_upgrade: d263e45e7c5086cc02bfb2fbd73443e0a5cb10cc
 
 PODFILE CHECKSUM: ecb34fa3a6ca3f551f7c3f72a53f491f1d5b65e8
